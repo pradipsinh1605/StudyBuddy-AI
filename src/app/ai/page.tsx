@@ -112,7 +112,7 @@ export default function AITutorPage() {
     if(!el||(window as any).mermaid==null) return;
     try{
       el.innerHTML="";
-      const {svg}=await (window as any).mermaid.render(`m${id.replace(/\D/g,"")%99999}`,code);
+      const {svg}=await (window as any).mermaid.render(`m${parseInt(id.replace(/\D/g,"")||"1")%99999}`,code);
       el.innerHTML=svg;
     }catch{
       el.innerHTML=`<p style="color:#F87171;padding:12px;font-size:12px">⚠️ Diagram render failed</p>`;
@@ -444,7 +444,7 @@ export default function AITutorPage() {
             <div style={{borderRadius:14,overflow:"hidden",background:"#0B1628",padding:24,border:"1px solid rgba(167,139,250,.15)"}}>
               <div className="mw" ref={el=>{
                 if(el&&mLoaded&&fullDiag){
-                  (window as any).mermaid?.render("full99",fullDiag)
+                  (window as any).mermaid?.render("fullscreen99",fullDiag)
                     .then(({svg}:{svg:string})=>{el.innerHTML=svg;})
                     .catch(()=>{el.innerHTML="<p style='color:#F87171;padding:12px'>Render error</p>";});
                 }
