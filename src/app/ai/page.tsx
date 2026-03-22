@@ -112,7 +112,7 @@ export default function AITutorPage() {
     if(!el||(window as any).mermaid==null) return;
     try{
       el.innerHTML="";
-      const {svg}=await (window as any).mermaid.render(`m${parseInt(id.replace(/\D/g,"")||"1")%99999}`,code);
+      const numId = parseInt(id.slice(-6)) || Math.floor(Math.random()*99999); const {svg}=await (window as any).mermaid.render(`maid${numId}`,code);
       el.innerHTML=svg;
     }catch{
       el.innerHTML=`<p style="color:#F87171;padding:12px;font-size:12px">⚠️ Diagram render failed</p>`;
