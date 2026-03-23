@@ -193,20 +193,27 @@ export default function NotesPage() {
                   <p style={{ fontSize:12,color:"var(--muted)",marginTop:4 }}>{new Date(selected.created_at).toLocaleDateString("en-IN",{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</p>
                 </div>
                 <div style={{ display:"flex",gap:8,flexShrink:0 }}>
-                  {[
-                    [()=>toggleStar(selected), <Star size={16} color="#F5A623" fill={selected.starred?"#F5A623":"none"}/>, "rgba(245,166,35,.15)", "rgba(245,166,35,.3)"],
-                    editing
-                      ? [saveEdit, <Save size={16}/>, "rgba(52,211,153,.15)", "rgba(52,211,153,.3)"]
-                      : [()=>{setEditContent(selected.content||"");setEditing(true);}, <Edit3 size={16}/>, "rgba(79,142,247,.15)", "rgba(79,142,247,.3)"],
-                    editing && [()=>setEditing(false), <X size={16}/>, "rgba(255,255,255,.05)", "rgba(255,255,255,.1)"],
-                    [()=>deleteNote(selected.id), <Trash2 size={16}/>, "rgba(248,113,113,.12)", "rgba(248,113,113,.3)"],
-                  ].filter(Boolean).map(([fn, icon, bg, border], i) => (
-                    <button key={i} onClick={fn as any} style={{ padding:8,borderRadius:10,border:`1px solid ${border}`,background:bg as string,color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s" }}
-                      onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)"}}
-                      onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)"}}>
-                      {icon as any}
+                  <button onClick={()=>toggleStar(selected)} style={{padding:8,borderRadius:10,border:"1px solid rgba(245,166,35,.3)",background:"rgba(245,166,35,.15)",color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s"}}
+                    onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.1)"}} onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)"}}>
+                    <Star size={16} color="#F5A623" fill={selected.starred?"#F5A623":"none"}/>
+                  </button>
+                  {editing ? (
+                    <button onClick={saveEdit} style={{padding:8,borderRadius:10,border:"1px solid rgba(52,211,153,.3)",background:"rgba(52,211,153,.15)",color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s"}}>
+                      <Save size={16}/>
                     </button>
-                  ))}
+                  ) : (
+                    <button onClick={()=>{setEditContent(selected.content||"");setEditing(true);}} style={{padding:8,borderRadius:10,border:"1px solid rgba(79,142,247,.3)",background:"rgba(79,142,247,.15)",color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s"}}>
+                      <Edit3 size={16}/>
+                    </button>
+                  )}
+                  {editing && (
+                    <button onClick={()=>setEditing(false)} style={{padding:8,borderRadius:10,border:"1px solid rgba(255,255,255,.1)",background:"rgba(255,255,255,.05)",color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s"}}>
+                      <X size={16}/>
+                    </button>
+                  )}
+                  <button onClick={()=>deleteNote(selected.id)} style={{padding:8,borderRadius:10,border:"1px solid rgba(248,113,113,.3)",background:"rgba(248,113,113,.12)",color:"var(--text)",cursor:"pointer",display:"flex",transition:"all .18s"}}>
+                    <Trash2 size={16}/>
+                  </button>
                 </div>
               </div>
               <div style={{ flex:1,padding:24,overflowY:"auto" }}>
